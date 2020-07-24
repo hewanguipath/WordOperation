@@ -1,0 +1,157 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.bulletPoints="[{&#xA;&quot;Financial Statements And Annual Return&quot;,&#xA;&quot;Income Tax Payment Slip&quot;,&#xA;&quot;Annual GST Return&quot;,&#xA;&quot;Activity Statement Payment Slip&quot;,&#xA;&quot;Annual Minutes And Electronic Lodgment Declaration&quot;&#xA;}]" this:Main.BPMarker="Bullet_Point_Marker1" this:Main.TemplatePath="Demo_template.htm" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/word" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="bulletPoints" Type="InArgument(s:String[])" />
+    <x:Property Name="BPMarker" Type="InArgument(x:String)" />
+    <x:Property Name="TemplatePath" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1130,1704.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="22">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="20">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Word Demo Bullet Point" sap:VirtualizedContainerService.HintSize="698,1500" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Int32" Name="idx" />
+      <Variable x:TypeArguments="x:String" Name="bulletPointHtml" />
+      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSpFirst " Name="fistBP" />
+      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSpLast " Name="lastBP" />
+      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSpMiddle " Name="midBP" />
+      <Variable x:TypeArguments="x:String" Name="text" />
+      <Variable x:TypeArguments="x:String" Name="endingBP" />
+      <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="matches" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:ReadTextFile Content="[text]" DisplayName="Read Text File" FileName="[TemplatePath]" sap:VirtualizedContainerService.HintSize="656,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+    <ui:Matches sap:VirtualizedContainerService.HintSize="656,58.6666666666667" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[text]" IsBuilderTabModified="False" Pattern="[&quot;&lt;p class=MsoListParagraph(CxSpFirst)? (style='(?:[^\n]+\n)*[^\n]+)&quot;+BPMarker+&quot;(.*)&quot;]" RegexOption="IgnoreCase, Multiline, Compiled" Result="[matches]" />
+    <If Condition="[matches.Count=1]" sap:VirtualizedContainerService.HintSize="656,1188.66666666667" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="510,1034.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:String" Name="styleBP" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:MultipleAssign DisplayName="Get the sytle bullet points" sap:VirtualizedContainerService.HintSize="468,128" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+            <ui:MultipleAssign.AssignOperations>
+              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[styleBP]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">[matches(0).groups(2).value]</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[endingBP]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">[matches(0).groups(3).value]</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+              </scg:List>
+            </ui:MultipleAssign.AssignOperations>
+          </ui:MultipleAssign>
+          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[idx]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="468,204" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[bulletPoints]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="x:String">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+                </ActivityAction.Argument>
+                <Assign sap:VirtualizedContainerService.HintSize="262,65.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[bulletPointHtml]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[bulletPointHtml+
+If(idx = 0, fistBP + styleBP+ item + endingBP,
+If(idx = bulletPoints.Count - 1, lastBP + styleBP + item + endingBP,
+midBP + styleBP + item + endingBP
+))]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </ActivityAction>
+            </ui:ForEach.Body>
+          </ui:ForEach>
+          <ui:Replace sap:VirtualizedContainerService.HintSize="468,58.6666666666667" sap2010:WorkflowViewState.IdRef="Replace_1" Input="[text]" IsBuilderTabModified="False" Pattern="(&lt;p class=MsoListParagraph(CxSpFirst)? style='(?:[^\n]+\n)*[^\n]+Bullet_Point_Marker1.*)" RegexOption="IgnoreCase, Multiline, Compiled" Replacement="[bulletPointHtml]" Result="[text]" />
+          <ui:WriteTextFile DisplayName="Write Text File" FileName="temp.htm" sap:VirtualizedContainerService.HintSize="468,135.333333333333" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[text]" />
+          <p:WordApplicationScope DisplayName="Word Application Scope" FilePath="temp.htm" sap:VirtualizedContainerService.HintSize="468,194.666666666667" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1">
+            <p:WordApplicationScope.Body>
+              <ActivityAction x:TypeArguments="ui:WordDocument">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:WordDocument" Name="WordDocumentScope" />
+                </ActivityAction.Argument>
+                <p:WordExportToPdf DisplayName="Export To PDF" FilePath="Demo.pdf" sap:VirtualizedContainerService.HintSize="434,86" sap2010:WorkflowViewState.IdRef="WordExportToPdf_1" />
+              </ActivityAction>
+            </p:WordApplicationScope.Body>
+          </p:WordApplicationScope>
+          <ui:Delete ContinueOnError="{x:Null}" sap:VirtualizedContainerService.HintSize="468,22" sap2010:WorkflowViewState.IdRef="Delete_1" Path="temp.htm" />
+        </Sequence>
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>
