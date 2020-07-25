@@ -66,11 +66,13 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="idx" />
       <Variable x:TypeArguments="x:String" Name="bulletPointHtml" />
-      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSpFirst " Name="fistBP" />
-      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSpLast " Name="lastBP" />
-      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSpMiddle " Name="midBP" />
+      <Variable x:TypeArguments="x:String" Name="BPHeader">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;p class=MsoListParagraphCxSp</Literal>
+        </Variable.Default>
+      </Variable>
       <Variable x:TypeArguments="x:String" Name="text" />
-      <Variable x:TypeArguments="x:String" Name="endingBP" />
+      <Variable x:TypeArguments="x:String" Name="BPStyleEnding" />
       <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="matches" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
@@ -96,7 +98,7 @@
       <If.Then>
         <Sequence sap:VirtualizedContainerService.HintSize="510,1532.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <Sequence.Variables>
-            <Variable x:TypeArguments="x:String" Name="styleBP" />
+            <Variable x:TypeArguments="x:String" Name="BPStyleStart" />
           </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -108,7 +110,7 @@
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[styleBP]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[BPStyleStart]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
                     <InArgument x:TypeArguments="x:String">[matches(0).groups(2).value]</InArgument>
@@ -116,7 +118,7 @@
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[endingBP]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[BPStyleEnding]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
                     <InArgument x:TypeArguments="x:String">[matches(0).groups(3).value]</InArgument>
@@ -127,6 +129,8 @@
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:MultipleAssign>
@@ -136,16 +140,20 @@
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="x:String" Name="BPText" />
                 </ActivityAction.Argument>
-                <Assign sap2010:Annotation.AnnotationText="Assemble the bulle points with the format above:&#xD;&#xA;&#xD;&#xA;BP Header, &lt;p class=MsoListParagraph(First|Last|Middle)&#xD;&#xA;BP Style, style='.....'&#xD;&#xA;BP text,   XXXXX&#xD;&#xA;BP Style ending, &lt;/p&gt;.....&#xD;&#xA;" sap:VirtualizedContainerService.HintSize="262,227.333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
+                <Assign sap2010:Annotation.AnnotationText="Assemble the bullet points with the format above:&#xD;&#xA;&#xD;&#xA;BP Header, &lt;p class=MsoListParagraph&#xD;&#xA;BP location, First Last or Middle&#xD;&#xA;BP Style, style='.....'&#xD;&#xA;BP text,   XXXXXXXXX&#xD;&#xA;BP Style ending, &lt;/p&gt;.....&#xD;&#xA;" sap:VirtualizedContainerService.HintSize="262,227.333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
                   <Assign.To>
                     <OutArgument x:TypeArguments="x:String">[bulletPointHtml]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[bulletPointHtml+
-If ( idx = 0, fistBP,
-	If( idx = bulletPoints.Count - 1, lastBP,
-		midBP)
-) + styleBP+ BPText + endingBP]</InArgument>
+                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[bulletPointHtml +
+BPHeader + 
+If ( idx = 0, "First ",
+	If( idx = bulletPoints.Count - 1, "Last ",
+		"Middle " )
+) + 
+BPStyleStart + 
+BPText + 
+BPStyleEnding]</InArgument>
                   </Assign.Value>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
