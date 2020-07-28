@@ -7,10 +7,10 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1130,1704.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>788,2550.66666666667</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="22">
+    <scg:List x:TypeArguments="x:String" Capacity="44">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -33,6 +33,8 @@
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
       <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>Microsoft.Office.Interop.Word</x:String>
+      <x:String>UiPath.Word</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -62,33 +64,29 @@
       <AssemblyReference>System.Memory</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Word Demo Bullet Point" sap:VirtualizedContainerService.HintSize="798,2293.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence DisplayName="Word Demo Bullet Point" sap:VirtualizedContainerService.HintSize="798,2346" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="idx" />
-      <Variable x:TypeArguments="x:String" Name="bulletPointHtml" />
-      <Variable x:TypeArguments="x:String" Name="BPHeader">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">&lt;p class=MsoListParagraphCxSp</Literal>
-        </Variable.Default>
-      </Variable>
-      <Variable x:TypeArguments="x:String" Name="text" />
+      <Variable x:TypeArguments="x:String" Name="BulletPointHtml" />
+      <Variable x:TypeArguments="x:String" Default="&lt;p class=MsoListParagraphCxSp" Name="BPHeader" />
+      <Variable x:TypeArguments="x:String" Name="Text" />
       <Variable x:TypeArguments="x:String" Name="BPStyleEnding" />
-      <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="matches" />
+      <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="Matches" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadTextFile Content="[text]" DisplayName="Read the template File" FileName="[TemplatePath]" sap:VirtualizedContainerService.HintSize="756,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-    <ui:Matches sap2010:Annotation.AnnotationText="Bullet points starts with &quot;&lt;p class=MsoListParagraphCxSpFirst &quot; and then followed with the style descriptions&#xD;&#xA;&#xD;&#xA;if there's only bullet point, it will be &#xD;&#xA; &quot;&lt;p class=MsoListParagraph &quot;&#xD;&#xA;&#xD;&#xA;if there're multiple, or even one with multiple lines, the first will be&#xD;&#xA; &quot;&lt;p class=MsoListParagraphCxSpFirst &quot;&#xD;&#xA;and the last &#xD;&#xA; &quot;&lt;p class=MsoListParagraphCxSpLast &quot;&#xD;&#xA;and all others in the middle will be&#xD;&#xA; &quot;&lt;p class=MsoListParagraphCxSpMiddle &quot;&#xD;&#xA;&#xD;&#xA;so we will have to generate our bullet points with this rule" DisplayName="Get the sytle of bullet points" sap:VirtualizedContainerService.HintSize="756,354" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[text]" IsBuilderTabModified="False" Pattern="[&quot;&lt;p class=MsoListParagraph(CxSpFirst)? (style='(?:[^\n]+\n)*[^\n]+)&quot;+BPMarker+&quot;(.*)&quot;]" RegexOption="IgnoreCase, Multiline, Compiled" Result="[matches]">
+    <ui:ReadTextFile Content="[Text]" DisplayName="Read the template File" FileName="[TemplatePath]" sap:VirtualizedContainerService.HintSize="756,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+    <ui:Matches sap2010:Annotation.AnnotationText="Bullet points starts with &quot;&lt;p class=MsoListParagraphCxSpFirst &quot; and then followed with the style descriptions&#xA;&#xA;if there's only bullet point, it will be &#xA; &quot;&lt;p class=MsoListParagraph &quot;&#xA;&#xA;if there're multiple, or even one with multiple lines, the first will be&#xA; &quot;&lt;p class=MsoListParagraphCxSpFirst &quot;&#xA;and the last &#xA; &quot;&lt;p class=MsoListParagraphCxSpLast &quot;&#xA;and all others in the middle will be&#xA; &quot;&lt;p class=MsoListParagraphCxSpMiddle &quot;&#xA;&#xA;so we will have to generate our bullet points with this rule" DisplayName="Get the sytle of bullet points" sap:VirtualizedContainerService.HintSize="756,354" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[Text]" IsBuilderTabModified="False" Pattern="[&quot;&lt;p class=MsoListParagraph(CxSpFirst)? (style='(?:[^\n]+\n)*[^\n]+)&quot;+BPMarker+&quot;(.*)&quot;]" RegexOption="IgnoreCase, Multiline, Compiled" Result="[Matches]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:Matches>
-    <If Condition="[matches.Count=1]" DisplayName="Asset there must be one and only one match" sap:VirtualizedContainerService.HintSize="756,1686.66666666667" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[Matches.Count=1]" DisplayName="Asset there must be one and only one match" sap:VirtualizedContainerService.HintSize="756,1739.33333333333" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -96,7 +94,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence sap:VirtualizedContainerService.HintSize="510,1532.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+        <Sequence sap:VirtualizedContainerService.HintSize="510,1585.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <Sequence.Variables>
             <Variable x:TypeArguments="x:String" Name="BPStyleStart" />
           </Sequence.Variables>
@@ -105,7 +103,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MultipleAssign sap2010:Annotation.AnnotationText="Get the Sytle texts, like &#xD;&#xA;&#xD;&#xA;&lt;p class=MsoListParagraph style='...'&gt; Bullet_Point_Marker1&#xD;&#xA;&lt;/span&gt;&lt;/p&gt;&#xD;&#xA;&#xD;&#xA;we take it as 3 parts:&#xD;&#xA;BP Header, &lt;p class=MsoListParagraph(first|last|middle)&#xD;&#xA;BP Style, style='.....'&#xD;&#xA;BP text,   XXXXX&#xD;&#xA;BP Style ending, &lt;/p&gt;.....&#xD;&#xA;" DisplayName="Get the sytle bullet points" sap:VirtualizedContainerService.HintSize="468,340" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+          <ui:MultipleAssign sap2010:Annotation.AnnotationText="Get the Sytle texts, like &#xA;&#xA;&lt;p class=MsoListParagraph style='...'&gt; Bullet_Point_Marker1&#xA;&lt;/span&gt;&lt;/p&gt;&#xA;&#xA;we take it as 3 parts:&#xA;BP Header, &lt;p class=MsoListParagraph(first|last|middle)&#xA;BP Style, style='.....'&#xA;BP text,   XXXXX&#xA;BP Style ending, &lt;/p&gt;.....&#xA;" DisplayName="Get the sytle bullet points" sap:VirtualizedContainerService.HintSize="468,340" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
@@ -113,7 +111,7 @@
                     <OutArgument x:TypeArguments="x:String">[BPStyleStart]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[matches(0).groups(2).value]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[Matches(0).groups(2).value]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
@@ -121,7 +119,7 @@
                     <OutArgument x:TypeArguments="x:String">[BPStyleEnding]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[matches(0).groups(3).value]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[Matches(0).groups(3).value]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
               </scg:List>
@@ -140,12 +138,12 @@
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="x:String" Name="BPText" />
                 </ActivityAction.Argument>
-                <Assign sap2010:Annotation.AnnotationText="Assemble the bullet points with the format above:&#xD;&#xA;&#xD;&#xA;BP Header, &lt;p class=MsoListParagraph&#xD;&#xA;BP location, First Last or Middle&#xD;&#xA;BP Style, style='.....'&#xD;&#xA;BP text,   XXXXXXXXX&#xD;&#xA;BP Style ending, &lt;/p&gt;.....&#xD;&#xA;" sap:VirtualizedContainerService.HintSize="262,227.333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
+                <Assign sap2010:Annotation.AnnotationText="Assemble the bullet points with the format above:&#xA;&#xA;BP Header, &lt;p class=MsoListParagraph&#xA;BP location, First Last or Middle&#xA;BP Style, style='.....'&#xA;BP text,   XXXXXXXXX&#xA;BP Style ending, &lt;/p&gt;.....&#xA;" sap:VirtualizedContainerService.HintSize="262,227.333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
                   <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[bulletPointHtml]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[BulletPointHtml]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[bulletPointHtml +
+                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[BulletPointHtml +
 BPHeader + 
 If ( idx = 0, "First ",
 	If( idx = bulletPoints.Count - 1, "Last ",
@@ -164,30 +162,32 @@ BPStyleEnding]</InArgument>
               </ActivityAction>
             </ui:ForEach.Body>
           </ui:ForEach>
-          <ui:Replace sap2010:Annotation.AnnotationText="Find the whole paragraph of the bullet point Marker to be repleaced" DisplayName="Replace the Marker" sap:VirtualizedContainerService.HintSize="468,104" sap2010:WorkflowViewState.IdRef="Replace_1" Input="[text]" IsBuilderTabModified="False" Pattern="(&lt;p class=MsoListParagraph(CxSpFirst)? style='(?:[^\n]+\n)*[^\n]+Bullet_Point_Marker1.*)" RegexOption="IgnoreCase, Multiline, Compiled" Replacement="[bulletPointHtml]" Result="[text]">
+          <ui:Replace sap2010:Annotation.AnnotationText="Find the whole paragraph of the bullet point Marker to be repleaced" DisplayName="Replace the Marker" sap:VirtualizedContainerService.HintSize="468,104" sap2010:WorkflowViewState.IdRef="Replace_1" Input="[Text]" IsBuilderTabModified="False" Pattern="(&lt;p class=MsoListParagraph(CxSpFirst)? style='(?:[^\n]+\n)*[^\n]+Bullet_Point_Marker1.*)" RegexOption="IgnoreCase, Multiline, Compiled" Replacement="[BulletPointHtml]" Result="[Text]">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:Replace>
-          <ui:WriteTextFile DisplayName="Write Text File" FileName="temp.htm" sap:VirtualizedContainerService.HintSize="468,135.333333333333" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[text]" />
-          <p:WordApplicationScope sap2010:Annotation.AnnotationText="Currently there's no way to save the word as docx from html, but luckly the Word activity is able to read directly from htm, and keep the operation in the scope. and export to PDF if that's the final output&#xD;&#xA;" DisplayName="Word Application Scope" FilePath="temp.htm" sap:VirtualizedContainerService.HintSize="468,273.333333333333" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1">
+          <ui:WriteTextFile DisplayName="Write Text File" FileName="temp.htm" sap:VirtualizedContainerService.HintSize="468,135.333333333333" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[Text]" />
+          <p:WordApplicationScope sap2010:Annotation.AnnotationText="The Save As activity is available in Word Activity 1.50&#xA;" DisplayName="Word Application Scope" FilePath="temp.htm" sap:VirtualizedContainerService.HintSize="468,326" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1">
             <p:WordApplicationScope.Body>
               <ActivityAction x:TypeArguments="ui:WordDocument">
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="ui:WordDocument" Name="WordDocumentScope" />
                 </ActivityAction.Argument>
-                <p:WordExportToPdf DisplayName="Export To PDF" FilePath="Demo.pdf" sap:VirtualizedContainerService.HintSize="434,86" sap2010:WorkflowViewState.IdRef="WordExportToPdf_1" />
+                <p:WordSaveAs DisplayName="Save Word File As" FilePath="Demo_Output.docx" sap:VirtualizedContainerService.HintSize="434,172" sap2010:WorkflowViewState.IdRef="WordSaveAs_2" />
               </ActivityAction>
             </p:WordApplicationScope.Body>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </p:WordApplicationScope>
-          <ui:Delete ContinueOnError="{x:Null}" sap:VirtualizedContainerService.HintSize="468,22" sap2010:WorkflowViewState.IdRef="Delete_1" Path="temp.htm" />
+          <ui:Delete ContinueOnError="True" sap:VirtualizedContainerService.HintSize="468,22" sap2010:WorkflowViewState.IdRef="Delete_1" Path="temp.htm" />
         </Sequence>
       </If.Then>
       <If.Else>
