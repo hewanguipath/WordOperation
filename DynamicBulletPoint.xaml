@@ -7,7 +7,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>788,2550.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>788,2581.33333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="44">
@@ -64,7 +64,7 @@
       <AssemblyReference>System.Memory</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Word Demo Bullet Point" sap:VirtualizedContainerService.HintSize="798,2346" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence DisplayName="Word Demo Bullet Point" sap:VirtualizedContainerService.HintSize="798,2376.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="idx" />
       <Variable x:TypeArguments="x:String" Name="BulletPointHtml" />
@@ -78,7 +78,13 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadTextFile Content="[Text]" DisplayName="Read the template File" FileName="[TemplatePath]" sap:VirtualizedContainerService.HintSize="756,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+    <ui:ReadTextFile sap2010:Annotation.AnnotationText="Please Convert the Template as HTML before this point" Content="[Text]" DisplayName="Read the template File" FileName="[TemplatePath]" sap:VirtualizedContainerService.HintSize="756,111.333333333333" sap2010:WorkflowViewState.IdRef="ReadTextFile_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ReadTextFile>
     <ui:Matches sap2010:Annotation.AnnotationText="Bullet points starts with &quot;&lt;p class=MsoListParagraphCxSpFirst &quot; and then followed with the style descriptions&#xA;&#xA;if there's only bullet point, it will be &#xA; &quot;&lt;p class=MsoListParagraph &quot;&#xA;&#xA;if there're multiple, or even one with multiple lines, the first will be&#xA; &quot;&lt;p class=MsoListParagraphCxSpFirst &quot;&#xA;and the last &#xA; &quot;&lt;p class=MsoListParagraphCxSpLast &quot;&#xA;and all others in the middle will be&#xA; &quot;&lt;p class=MsoListParagraphCxSpMiddle &quot;&#xA;&#xA;so we will have to generate our bullet points with this rule" DisplayName="Get the sytle of bullet points" sap:VirtualizedContainerService.HintSize="756,354" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[Text]" IsBuilderTabModified="False" Pattern="[&quot;&lt;p class=MsoListParagraph(CxSpFirst)? (style='(?:[^\n]+\n)*[^\n]+)&quot;+BPMarker+&quot;(.*)&quot;]" RegexOption="IgnoreCase, Multiline, Compiled" Result="[Matches]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -170,7 +176,7 @@ BPStyleEnding]</InArgument>
             </sap:WorkflowViewStateService.ViewState>
           </ui:Replace>
           <ui:WriteTextFile DisplayName="Write Text File" FileName="temp.htm" sap:VirtualizedContainerService.HintSize="468,135.333333333333" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[Text]" />
-          <p:WordApplicationScope sap2010:Annotation.AnnotationText="The Save As activity is available in Word Activity 1.50&#xA;" DisplayName="Word Application Scope" FilePath="temp.htm" sap:VirtualizedContainerService.HintSize="468,326" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1">
+          <p:WordApplicationScope sap2010:Annotation.AnnotationText="The Save As activity is available in Word Activity 1.50-preview&#xA;" DisplayName="Word Application Scope" FilePath="temp.htm" sap:VirtualizedContainerService.HintSize="468,326" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1">
             <p:WordApplicationScope.Body>
               <ActivityAction x:TypeArguments="ui:WordDocument">
                 <ActivityAction.Argument>
