@@ -4,7 +4,7 @@
   "main": "DynamicBulletPoint.xaml",
   "dependencies": {
     "UiPath.System.Activities": "[20.4.0]",
-    "UiPath.Word.Activities": "[1.5.0-preview]"
+    "UiPath.Word.Activities": "[1.5.2-preview]"
   },
   "webServices": [],
   "schemaVersion": "4.0",
