@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TargetAnchorable ContentHash="Zbc-IGTFkkCS7LbbuGnpGA" DesignTimeRectangle="170, 223, 1562, 47" ElementType="Toolbar" FriendlyName="'Address: C:\Users\He.Wa…'" FullSelectorArgument="&lt;wnd cls='ToolbarWindow32' title='Address: C:\Users\He.Wang\Documents\UiPath\wordOp' /&gt;" FuzzySelectorArgument="&lt;wnd cls='ToolbarWindow32' title='Address: C:\Users\He.Wang\Documents\UiPath\wordOp' check:text='Address: C:\Users\He.Wang\Documents\UiPath\wordOp' /&gt;" ScopeSelectorArgument="&lt;wnd app='explorer.exe' cls='CabinetWClass' title='wordOp' /&gt;" SearchSteps="Selector, FuzzySelector, Image" xmlns="http://schemas.uipath.com/workflow/activities/uix">
+  <imageRef attrName="ImageBase64" xmlns="">0uXOcUV0d5EWi93CqcVG8HA</imageRef>
+  <imageRef attrName="InformativeScreenshot" originalValue="2bfd716cb0d2a1c725ccc50b95f54ac7.png" xmlns="">0Rhzk2sAqCUu1pRVseKjbYw</imageRef>
+</TargetAnchorable>

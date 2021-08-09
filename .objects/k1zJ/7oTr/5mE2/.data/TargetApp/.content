@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TargetApp Area="0, 0, 0, 0" Arguments="c:\users\he.wang\documents\uipath\wordop" ContentHash="4Bs-O4uuLECRERMTcnrDfw" FilePath="C:\Windows\explorer.exe" Selector="&lt;wnd app='explorer.exe' cls='CabinetWClass' title='wordOp'/&gt;" xmlns="http://schemas.uipath.com/workflow/activities/uix">
+  <imageRef attrName="IconBase64" xmlns="">0y8x307NDjUeXNBf2ANXYQg</imageRef>
+  <imageRef attrName="InformativeScreenshot" originalValue="84e5045670ef663564b2acce674dc3e4.png" xmlns="">0WZXxb4zcB0WW_aF7MnITfw</imageRef>
+</TargetApp>

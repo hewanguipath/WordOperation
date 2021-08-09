@@ -1,0 +1,12 @@
+﻿{
+  "Id": "5mE2l3OZbk-OUiT0zDfWaA",
+  "Reference": "eKanNuegUU2pKULDkssX9w/5mE2l3OZbk-OUiT0zDfWaA",
+  "ParentRef": "eKanNuegUU2pKULDkssX9w/7oTrpuBxk0KVawLQkMsheg",
+  "Name": "NewScreen",
+  "Type": "Screen",
+  "Created": "2021-08-09T00:08:43.2916886Z",
+  "CreatedBy": [
+    "UiPath.Platform, Version=21.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ],
+  "Updated": "2021-08-09T00:08:43.2916886Z"
+}
